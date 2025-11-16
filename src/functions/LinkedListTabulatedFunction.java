@@ -179,9 +179,11 @@ public class LinkedListTabulatedFunction implements TabulatedFunction, Externali
     public double getFunctionValue(double x) {
         if (x < getLeftDomainBorder() || x > getRightDomainBorder())
             return Double.NaN;
-
         FunctionNode cur = head.next;
         while (cur.next != head) {
+            if (Math.abs(cur.point.getX() - x) < EPS) {
+                return cur.point.getY();
+            }
             double x1 = cur.point.getX();
             double x2 = cur.next.point.getX();
             if (x >= x1 && x <= x2) {
@@ -193,6 +195,7 @@ public class LinkedListTabulatedFunction implements TabulatedFunction, Externali
         }
         return Double.NaN;
     }
+
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
         out.writeInt(pointsCount);

@@ -74,7 +74,7 @@ public class Main {
         System.out.println();
         func1.setPointY(1, func1.getPointY(1) + 3);
         func5.setPointY(0, func1.getPointY(1) + 6);
-        System.out.println("Проверка на глубокое клонирование:");
+        System.out.println("Проверка на глубокое копирование:");
         System.out.println("Изменённая func1: " + func1);
         System.out.println("Копия func1: " + funcClone1);
         System.out.println("Изменённая func5: " + func5);

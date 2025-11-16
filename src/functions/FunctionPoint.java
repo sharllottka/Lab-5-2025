@@ -53,7 +53,7 @@ public class FunctionPoint implements Serializable {
           return false;
       }
       FunctionPoint other = (FunctionPoint) o;
-      if (Double.compare(this.x, other.x) == 0 && Double.compare(this.y, other.y) == 0) {
+      if (Math.abs(this.x - other.x) < EPS && Math.abs(this.y - other.y) < EPS) {
           return true;
       }
       else {

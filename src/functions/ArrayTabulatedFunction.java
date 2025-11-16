@@ -85,7 +85,11 @@ public class ArrayTabulatedFunction implements TabulatedFunction, Serializable {
         if (x < getLeftDomainBorder() || x > getRightDomainBorder()) {
             return Double.NaN;
         }
-
+        for (int i = 0; i < pointsCount; i++) {
+            if (Math.abs(points[i].getX() - x) < EPS) {
+                return points[i].getY();
+            }
+        }
         for (int i = 0; i < pointsCount - 1; i++) {
             double x1 = points[i].getX();
             double x2 = points[i + 1].getX();
@@ -241,15 +245,18 @@ public class ArrayTabulatedFunction implements TabulatedFunction, Serializable {
         if (this.getPointsCount() != other.getPointsCount()) {
             return false;
         }
-        for (int i = 0; i < pointsCount; i++) {
-            if (o instanceof ArrayTabulatedFunction) {
-                ArrayTabulatedFunction otherArray = (ArrayTabulatedFunction) o;
-                if (Double.compare(this.points[i].getX(), otherArray.points[i].getX()) != 0 || Double.compare(this.points[i].getY(), otherArray.points[i].getY()) != 0) {
+        if (o instanceof ArrayTabulatedFunction) {
+            ArrayTabulatedFunction otherArray = (ArrayTabulatedFunction) o;
+            for (int i = 0; i < pointsCount; i++) {
+
+                if (!this.points[i].equals(otherArray.points[i])) {
                     return false;
                 }
             }
-            else {
-                if (Double.compare(this.getPointX(i), other.getPointX(i)) != 0 || Double.compare(this.getPointY(i), other.getPointY(i)) != 0) {
+        }
+        else {
+            for (int i = 0; i < pointsCount; i++) {
+                if (!this.getPoint(i).equals(other.getPoint(i))) {
                     return false;
                 }
             }
